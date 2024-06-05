@@ -103,13 +103,13 @@
         {
             if (ball.Y <= 0)
             {
-                return 1;  
+                return 1;
             }
             if (ball.Y >= field.GetCols - 1)
             {
-                return 0;  
+                return 0;
             }
-            return -1;  
+            return -1;
         }
     }
 
@@ -141,7 +141,7 @@
             this._field = new char[height, width];
             this.Tile = tile;
 
-            
+
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
@@ -150,7 +150,7 @@
                 }
             }
 
-            
+
             for (int i = 0; i < this.GetCols; i++)
             {
                 this.Set(0, i, tile);
@@ -248,19 +248,19 @@
 
         public void CalculateTrajectory(Field field, char leftRacketTile, char rightRacketTile)
         {
+
             
             if (_x >= 0 && _x < field.GetRows && _y >= 0 && _y < field.GetCols && field.Get(_x, _y) != '#')
                 field.Set(this._x, this._y, ' ');
 
-            if (_x + 1 >= field.GetRows)
-            {
-                this._isGoingDown = false;
-            }
-            else if (_x - 1 < 0)
+            if (_x - 1 < 0 || field.Get(_x - 1, _y) == '#')
             {
                 this._isGoingDown = true;
-            }
-
+            } 
+            else if (_x + 1 >= field.GetRows || field.Get(_x + 1, _y) == '#')
+            {
+                this._isGoingDown = false;
+            }     
             if (_y + 1 < field.GetCols && field.Get(_x, _y + 1) == rightRacketTile)
             {
                 this._isGoingRight = false;
@@ -276,7 +276,7 @@
         }
 
         public void Reset(Field field)
-        {
+        {     
             if (_x >= 0 && _x < field.GetRows && _y >= 0 && _y < field.GetCols && field.Get(_x, _y) != '#')
                 field.Set(this._x, this._y, ' ');
 
